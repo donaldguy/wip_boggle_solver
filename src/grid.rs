@@ -67,13 +67,13 @@ impl<T: Eq> Grid<T> {
     fn get_adjacent_to(&self, row: isize, col: isize) -> impl IntoIterator<Item = &Cube<T>> {
         //clockwise from "12"
 
-        let up = self.get(row - 1, col + 0);
+        let up = self.get(row - 1, col);
         let up_right = self.get(row - 1, col + 1);
-        let right = self.get(row + 0, col + 1);
+        let right = self.get(row, col + 1);
         let down_right = self.get(row + 1, col + 1);
-        let down = self.get(row + 1, col + 0);
+        let down = self.get(row + 1, col);
         let down_left = self.get(row + 1, col - 1);
-        let left = self.get(row + 0, col - 1);
+        let left = self.get(row, col - 1);
         let up_left = self.get(row - 1, col - 1);
 
         let mut result = Vec::with_capacity(5); //OVER-OPTIMIZATION: a 4x4 grid averages 5 neighbors, I believe
