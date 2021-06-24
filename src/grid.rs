@@ -1,4 +1,3 @@
-
 #[derive(Debug, PartialEq, Eq, Hash)]
 struct Cube<T: Eq> {
     value: T,
@@ -14,11 +13,7 @@ struct Grid<T: Eq> {
 }
 
 impl<T: Eq> Grid<T> {
-    fn new<I, Tt>(rows: usize, columns: usize, input: I) -> Self
-    where
-        I: IntoIterator<Item = Tt>,
-        Tt: ToOwned<Owned = T>,
-    {
+    fn new<I: IntoIterator<Item = T>>(rows: usize, columns: usize, input: I) -> Self {
         let mut value_it = input.into_iter();
         let (min_values, _) = value_it.size_hint();
         if min_values < rows * columns {
@@ -34,11 +29,7 @@ impl<T: Eq> Grid<T> {
         for row in 0..rows {
             for col in 0..columns {
                 let value = value_it.next().unwrap();
-                grid.cubes.push(Cube::<T> {
-                    row,
-                    col,
-                    value: value.to_owned(),
-                });
+                grid.cubes.push(Cube { row, col, value });
             }
         }
 
