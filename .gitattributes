@@ -1,2 +1,2 @@
 data/CSW19.txt filter=lfs diff=lfs merge=lfs -text
-data/dictonary.bin filter=lfs diff=lfs merge=lfs -text
+data/dictionary.bin filter=lfs diff=lfs merge=lfs -text

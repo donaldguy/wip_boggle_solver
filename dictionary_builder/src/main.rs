@@ -1,7 +1,5 @@
-use sequence_trie::SequenceTrie;
 use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
-
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -23,13 +21,13 @@ struct DictionaryBuilder {
         short,
         long,
         help = "The binary serialized trie from the dictionary",
-        default_value = "../data/dictonary.bin",
+        default_value = "../data/dictionary.bin",
         parse(from_os_str)
     )]
     output: PathBuf,
 }
 
-type CharBoolTrie = SequenceTrie<char, bool>;
+type CharBoolTrie = solver::dictionary::SproutableTrie<char, bool>;
 
 impl DictionaryBuilder {
     fn get_word_list(&self) -> std::io::Result<impl IntoIterator<Item = String>> {
@@ -71,7 +69,7 @@ fn main() -> std::io::Result<()> {
     let mut i = 1;
     for word in word_list {
         println!("Processing word {} of {}", i, word_count);
-        trie.insert_owned(word.chars().collect::<Vec<char>>(), true);
+        trie.insert(word.chars(), true);
         i += 1;
     }
 

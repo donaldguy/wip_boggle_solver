@@ -55,7 +55,7 @@ name = "dictionary_builder"
 version = "0.1.0"
 dependencies = [
  "bincode",
- "sequence_trie 0.3.6 (git+https://github.com/michaelsproul/rust_sequence_trie)",
+ "solver",
  "structopt",
 ]
 
@@ -132,20 +132,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sequence_trie"
-version = "0.3.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1ee22067b7ccd072eeb64454b9c6e1b33b61cd0d49e895fd48676a184580e0c3"
-
-[[package]]
-name = "sequence_trie"
-version = "0.3.6"
-source = "git+https://github.com/michaelsproul/rust_sequence_trie#d36487c8d58b90ecdd64a355c2b125e09a44682b"
-dependencies = [
- "serde",
-]
-
-[[package]]
 name = "serde"
 version = "1.0.126"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -169,7 +155,7 @@ dependencies = [
 name = "solver"
 version = "0.1.0"
 dependencies = [
- "sequence_trie 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde",
 ]
 
 [[package]]

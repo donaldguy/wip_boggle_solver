@@ -1,23 +1,27 @@
+use std::collections::HashSet;
+
+use std::hash::Hash;
+
 #[derive(Debug, PartialEq, Eq, Hash)]
-struct Cube<T: Eq> {
-    value: T,
-    row: usize,
-    col: usize,
+pub struct Cube<T: Eq + Hash> {
+    pub value: T,
+    pub row: usize,
+    pub col: usize,
 }
 
 #[derive(Debug)]
-struct Grid<T: Eq> {
+pub struct Grid<T: Eq + Hash> {
     columns: usize,
     rows: usize,
     cubes: Vec<Cube<T>>,
 }
 
-impl<T: Eq> Grid<T> {
-    fn new<I: IntoIterator<Item = T>>(rows: usize, columns: usize, input: I) -> Self {
+impl<T: Eq + Hash> Grid<T> {
+    pub fn new<I: IntoIterator<Item = T>>(rows: usize, columns: usize, input: I) -> Self {
         let mut value_it = input.into_iter();
-        let (min_values, _) = value_it.size_hint();
-        if min_values < rows * columns {
-            panic!("Attempted to construct Grid with insufficient sized input. Need {} (rows) * {} (columns) = {}, only offered {}", rows, columns, rows * columns, min_values);
+        let max_values = value_it.size_hint().1.unwrap();
+        if max_values < rows * columns {
+            panic!("Attempted to construct Grid with insufficient sized input. Need {} (rows) * {} (columns) = {}, only offered {}", rows, columns, rows * columns, max_values);
         }
 
         let mut grid: Grid<T> = Self {
@@ -36,12 +40,16 @@ impl<T: Eq> Grid<T> {
         grid
     }
 
+    pub fn cubes_set(&self) -> HashSet<&Cube<T>> {
+        self.cubes.iter().collect()
+    }
+
     /// get a cube by canonical zero-indexed row and column.
     ///
     /// though cubes in memory are linearized, this will return the cube only if referred to by correct index
     /// (e.g. for `n` column grid: `row: 1, col: 0` ; not `row: 0, col: n`)
     /// otherwise `None`. This simplifies the implementation of `get_adjacent_to`
-    fn get(&self, row: isize, col: isize) -> Option<&Cube<T>> {
+    pub fn get(&self, row: isize, col: isize) -> Option<&Cube<T>> {
         if row < 0 || col < 0 {
             return None;
         }
@@ -64,8 +72,11 @@ impl<T: Eq> Grid<T> {
     /// returns iterable of any adjacent cubes that exist
     // XXX: I'd prefer this be `cube.get_adjacent` or at least `get_adjacent_to(&self, cube: Cube)`
     // but that slightly better API was a rabbit hole of borrow checking fighting
-    fn get_adjacent_to(&self, row: isize, col: isize) -> impl IntoIterator<Item = &Cube<T>> {
+    pub fn get_adjacent_to(&self, row: usize, col: usize) -> impl IntoIterator<Item = &Cube<T>> {
         //clockwise from "12"
+
+        let row = row as isize;
+        let col = col as isize;
 
         let up = self.get(row - 1, col);
         let up_right = self.get(row - 1, col + 1);
