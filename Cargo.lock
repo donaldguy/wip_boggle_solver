@@ -55,7 +55,7 @@ name = "cli_solver"
 version = "0.1.0"
 dependencies = [
  "bincode",
- "solver",
+ "grid_search",
  "structopt",
 ]
 
@@ -64,8 +64,15 @@ name = "dictionary_builder"
 version = "0.1.0"
 dependencies = [
  "bincode",
- "solver",
+ "grid_search",
  "structopt",
+]
+
+[[package]]
+name = "grid_search"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -158,13 +165,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "solver"
-version = "0.1.0"
-dependencies = [
- "serde",
 ]
 
 [[package]]

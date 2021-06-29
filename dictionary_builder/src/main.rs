@@ -27,7 +27,7 @@ struct DictionaryBuilder {
     output: PathBuf,
 }
 
-type CharBoolTrie = solver::dictionary::SproutableTrie<char, bool>;
+type CharBoolTrie = grid_search::dictionary::SproutableTrie<char, bool>;
 
 impl DictionaryBuilder {
     fn get_word_list(&self) -> std::io::Result<impl IntoIterator<Item = String>> {

@@ -10,4 +10,4 @@ edition = "2018"
 structopt = "0.3"
 
 bincode = "1.3.3"
-solver = {path = "../solver"}
+grid_search = {path = "../grid_search" }

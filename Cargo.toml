@@ -2,7 +2,7 @@
 [workspace]
 members = [
     "cli_solver",
-    "solver",
+    "grid_search",
     "dictionary_builder",
 ]
 
