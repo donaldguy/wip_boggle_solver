@@ -51,6 +51,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "cli_solver"
+version = "0.1.0"
+dependencies = [
+ "bincode",
+ "solver",
+ "structopt",
+]
+
+[[package]]
 name = "dictionary_builder"
 version = "0.1.0"
 dependencies = [

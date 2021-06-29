@@ -46,7 +46,8 @@ impl<K: Eq + Hash, V> SproutableTrie<K, V> {
     }
 }
 
-struct SproutedTrie<'a, K: Hash + Eq, V> {
+#[derive(Clone)]
+pub struct SproutedTrie<'a, K: Hash + Eq, V> {
     keys: Vec<&'a K>,
     node: &'a SproutableTrie<K, V>,
 
@@ -54,7 +55,7 @@ struct SproutedTrie<'a, K: Hash + Eq, V> {
 }
 
 impl<'a, K: Hash + Eq, V> SproutedTrie<'a, K, V> {
-    fn new(source_root: &'a SproutableTrie<K, V>) -> Self {
+    pub fn new(source_root: &'a SproutableTrie<K, V>) -> Self {
         Self {
             keys: vec![],
             node: source_root,
@@ -62,11 +63,11 @@ impl<'a, K: Hash + Eq, V> SproutedTrie<'a, K, V> {
         }
     }
 
-    fn avaliable_seeds(&self) -> Keys<K, SproutableTrie<K, V>> {
+    pub fn avaliable_seeds(&self) -> Keys<K, SproutableTrie<K, V>> {
         self.node.children.keys()
     }
 
-    fn sprout(&mut self, k: &'a K) -> &mut Self {
+    pub fn sprout(&mut self, k: &'a K) -> &mut Self {
         let seed = self.node.children.get(k);
         if seed.is_none() {
             return self;
@@ -78,7 +79,7 @@ impl<'a, K: Hash + Eq, V> SproutedTrie<'a, K, V> {
         self.active_children.get_mut(k).unwrap()
     }
 
-    fn flatten(self) -> Vec<(Vec<&'a K>, &'a V)> {
+    pub fn flatten(self) -> Vec<(Vec<&'a K>, &'a V)> {
         let mut this = if self.node.value.is_some() {
             vec![(self.keys, self.node.value.as_ref().unwrap())]
         } else {
