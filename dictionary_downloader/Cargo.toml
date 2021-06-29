@@ -1,0 +1,9 @@
+[package]
+name = "dictionary_builder"
+version = "0.1.0"
+authors = ["Donald Guy <donaldguy@hey.com>"]
+edition = "2018"
+
+[dependencies]
+sequence_trie = "*"
+structopt = "0.3"
