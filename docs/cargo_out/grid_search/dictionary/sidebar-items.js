@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SproutableTrie","crates.io contains a number of tries and various text automata things. I feel like its inconcievable the thing I want isn't already up there somewhere; but I couldn't find it."],["SproutedTrie",""]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Pointer","A pointer to a cell within a grid. Can give underlying value, row/col info, and return (pointers to) adjacent cells."]],"trait":[["Value","The value of a grid cell when evaluating it for matching within a sequence"]]});

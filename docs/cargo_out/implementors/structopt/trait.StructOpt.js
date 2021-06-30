@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["dictionary_builder"] = [{"text":"impl StructOpt for <a class=\"struct\" href=\"dictionary_builder/struct.DictionaryBuilder.html\" title=\"struct dictionary_builder::DictionaryBuilder\">DictionaryBuilder</a>","synthetic":false,"types":["dictionary_builder::DictionaryBuilder"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
