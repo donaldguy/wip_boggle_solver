@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["dictionary",""],["grid",""]]});
+initSidebarItems({"fn":[["find_sequences_from_dict_in_grid",""]],"mod":[["dictionary",""],["grid",""]]});
