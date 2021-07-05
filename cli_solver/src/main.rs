@@ -19,7 +19,7 @@ struct CLISolver {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let this = CLISolver::from_args();
 
-    let grid = grid_search::grid::Grid::new(this.rows, this.columns, "GNESSRIPETALTSEB".chars());
+    let grid = grid_search::grid::Grid::new(this.rows, this.columns, this.grid.chars());
     let dict: grid_search::dictionary::SproutableTrie<char, bool> =
         bincode::deserialize_from(BufReader::new(fs::File::open(this.dictionary)?))?;
 
@@ -34,14 +34,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         print!("\n");
     }
     println!("{}", i);
-
-    // let mut avaliable_cells = grid.cells_set();
-    // let mut words:  = Vec::new();
-
-    // let letter_trie = dict.get_node(&[cell.value]).unwrap();
-    // avaliable_cells.remove(cell);
-    // let adjacent_cells = grid.get_adjacent_to(cell.row, cell.col);
-    // for ac in adjacent_cells
 
     Ok(())
 }

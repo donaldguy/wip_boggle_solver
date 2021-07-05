@@ -4,10 +4,7 @@
 //! With `grid::Grid<char>` and the `grid::dictionary::SproutableTrie` from `dictionary_builder`
 //! this is a boggle solver.
 
-use std::{
-    collections::{HashMap, HashSet},
-    iter::FromIterator,
-};
+use std::{collections::HashSet, iter::FromIterator};
 
 use dictionary::SproutedTrie;
 pub mod dictionary;
@@ -36,38 +33,26 @@ pub fn find_sequences_from_dict_in_grid<'a, T: grid::cell::Value>(
     trie.flatten()
 }
 
-fn find_at_cell<T: grid::cell::Value>(
-    cell: grid::CellPointer<T>,
+fn find_at_cell<'a, T: grid::cell::Value>(
+    cell: grid::CellPointer<'a, T>,
     trie: &mut dictionary::SproutedTrie<T, bool>,
-    unused_cells: HashSet<grid::CellPointer<T>>,
+    mut unused_cells: HashSet<grid::CellPointer<'a, T>>,
 ) {
-    let seeds: Vec<&T> = trie.avaliable_seeds().collect();
+    let seeds: HashSet<&T> = trie.avaliable_seeds().collect();
 
     if seeds.is_empty() || unused_cells.is_empty() {
         return;
     }
+    unused_cells.remove(&cell);
 
-    let adjacent_set = cell.get_adjacent_cell_in(&unused_cells);
+    let adjacent_cells = cell.get_adjacent_cell_in(&unused_cells);
 
-    let mut adjacent_map: HashMap<&T, &grid::CellPointer<T>> =
-        HashMap::with_capacity(adjacent_set.len());
-    for adjacent in adjacent_set.iter() {
-        adjacent_map.insert(adjacent.value(), adjacent);
-    }
+    for next_cell in adjacent_cells {
+        let next_cell_value = next_cell.value();
+        if seeds.contains(next_cell_value) {
+            let trie = trie.sprout(seeds.get(next_cell.value()).unwrap());
 
-    for seed in seeds {
-        if adjacent_map.contains_key(seed) {
-            let mut unused_cells = unused_cells.clone();
-            unused_cells.remove(&cell);
-            let cell = adjacent_map[seed];
-
-            find_at_cell(
-                cell.grid()
-                    .get(cell.row() as isize, cell.col() as isize)
-                    .unwrap(),
-                trie.sprout(seed),
-                unused_cells,
-            )
+            find_at_cell(next_cell, trie, unused_cells.clone());
         }
     }
 }

@@ -72,10 +72,14 @@ impl<'a, K: Hash + Eq, V> SproutedTrie<'a, K, V> {
         if seed.is_none() {
             return self;
         }
-        let mut seedling = Self::new(seed.unwrap());
-        seedling.keys = self.keys.clone();
-        seedling.keys.push(k);
-        self.active_children.insert(k, seedling);
+
+        if !self.active_children.contains_key(k) {
+            let mut seedling = Self::new(seed.unwrap());
+            seedling.keys = self.keys.clone();
+            seedling.keys.push(k);
+            self.active_children.insert(k, seedling);
+        }
+
         self.active_children.get_mut(k).unwrap()
     }
 
