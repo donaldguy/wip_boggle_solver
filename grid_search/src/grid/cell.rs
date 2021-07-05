@@ -3,11 +3,11 @@ use std::hash::Hash;
 use std::sync::Arc;
 
 /// The value of a grid cell when evaluating it for matching within a sequence
-pub trait Value: Eq + Hash + Debug {}
+pub trait Value: Eq + Hash {}
 /// Anything we can check for equality and hash (and for good measure, print) should do
-impl<T: Eq + Hash + Debug> Value for T {}
+impl<T: Eq + Hash> Value for T {}
 
-#[derive(Debug, PartialEq, Eq, Hash)]
+#[derive(PartialEq, Eq, Hash)]
 pub(super) struct Inner<T: Value> {
     pub value: T,
     pub row: usize,
@@ -18,6 +18,16 @@ pub(super) struct Inner<T: Value> {
 pub struct Pointer<'grid, T: Value> {
     grid: Arc<super::Grid<T>>,
     inner: &'grid Inner<T>,
+}
+
+impl<T: Value + Debug> Debug for Pointer<'_, T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("grid::cell::Pointer")
+            .field("row", &self.inner.row)
+            .field("col", &self.inner.col)
+            .field("value", &self.inner.value)
+            .finish()
+    }
 }
 
 impl<T: Value> Clone for Pointer<'_, T> {

@@ -5,7 +5,7 @@ use std::{
 
 use super::cell;
 
-#[derive(Debug, PartialEq, Eq, Hash)]
+#[derive(PartialEq, Eq, Hash)]
 pub(super) struct Inner<T: cell::Value> {
     columns: usize,
     rows: usize,
