@@ -15,10 +15,18 @@ pub(super) struct Inner<T: Value> {
 }
 
 /// A pointer to a cell within a grid. Can give underlying value, row/col info, and return (pointers to) adjacent cells.
-#[derive(Clone)]
 pub struct Pointer<'grid, T: Value> {
     grid: Arc<super::Grid<T>>,
     inner: &'grid Inner<T>,
+}
+
+impl<T: Value> Clone for Pointer<'_, T> {
+    fn clone(&self) -> Self {
+        Self {
+            grid: self.grid.clone(),
+            inner: self.inner,
+        }
+    }
 }
 
 impl<T: Value> PartialEq for Pointer<'_, T> {

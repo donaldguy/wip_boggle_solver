@@ -63,11 +63,11 @@ impl<'a, K: Hash + Eq, V> SproutedTrie<'a, K, V> {
         }
     }
 
-    pub fn avaliable_seeds(&self) -> Keys<K, SproutableTrie<K, V>> {
+    pub fn avaliable_seeds(&self) -> Keys<'a, K, SproutableTrie<K, V>> {
         self.node.children.keys()
     }
 
-    pub fn sprout(&mut self, k: &'a K) -> &mut Self {
+    pub fn sprout<'b>(&'b mut self, k: &'a K) -> &'b mut Self {
         let seed = self.node.children.get(k);
         if seed.is_none() {
             return self;

@@ -3,6 +3,7 @@
 members = [
     "grid_search",
     "dictionary_builder",
+    "cli_solver"
 ]
 
 
